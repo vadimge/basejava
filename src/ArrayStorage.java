@@ -19,8 +19,9 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         for (int i = 0; i < resumesCounter; i++){
-            if (storage[i].uuid.equals(uuid))
+            if (storage[i].uuid.equals(uuid)) {
                 return storage[i];
+            }
         }
         return null;
     }
@@ -31,6 +32,7 @@ public class ArrayStorage {
                 storage[i] = storage[resumesCounter - 1];
                 storage[resumesCounter - 1] = null;
                 resumesCounter--;
+                break;
             }
         }
     }
