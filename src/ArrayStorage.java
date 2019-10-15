@@ -4,7 +4,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int resumesCounter = 0;
     private int resumeIndex = 0;
 
@@ -14,7 +14,7 @@ public class ArrayStorage {
     }
 
     void save(Resume resume) {
-        if (checkingTheSameResume(resume) != -1) {
+        if (getResumeIndex(resume.uuid) != -1) {
             System.out.println("Resume " + resume.uuid + " already in the database");
         } else if (resumesCounter < storage.length) {
             storage[resumesCounter] = resume;
@@ -25,9 +25,10 @@ public class ArrayStorage {
     }
 
     void update(Resume resume) {
-        resumeIndex = checkingTheSameResume(resume);
+        resumeIndex = getResumeIndex(resume.uuid);
         if (resumeIndex != -1) {
             storage[resumeIndex] = resume;
+            System.out.println("Resume " + resume.uuid + " updated");
         } else {
             System.out.println("ERROR: There is no such resume in the database");
         }
@@ -37,10 +38,9 @@ public class ArrayStorage {
         resumeIndex = getResumeIndex(uuid);
         if (resumeIndex != -1){
             return storage[resumeIndex];
-        }else {
-            System.out.println("ERROR: No resume " + uuid + " in the database");
-            return null;
         }
+        System.out.println("ERROR: No resume " + uuid + " in the database");
+        return null;
     }
 
     void delete(String uuid) {
@@ -65,15 +65,6 @@ public class ArrayStorage {
 
     int size() {
         return resumesCounter;
-    }
-
-    private int checkingTheSameResume(Resume resume) {
-        for (int i = 0; i < resumesCounter; i++) {
-            if (storage[i].uuid.equals(resume.uuid)) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private int getResumeIndex(String uuid) {
